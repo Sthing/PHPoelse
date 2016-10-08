@@ -1,0 +1,22 @@
+{
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Peter Bøg",
+			"email": "phb@combine.dk",
+			"role": "Developer"
+		},
+		{
+			"name": "Søren Thing Andersen",
+			"email": "sta@combine.dk",
+			"role": "Developer"
+		}, {
+			"name": "Jonas Grann",
+			"email": "jdg@combine.dk",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": "^7.0"
+	}
+}
