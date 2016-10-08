@@ -14,7 +14,9 @@ RUN docker-php-ext-enable xdebug
 
 RUN echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-	&& echo "xdebug.remote_host=10.0.75.1" >> /usr/local/etc/php/conf.d/xdebug.ini
+	&& echo "xdebug.remote_host=10.0.75.1" >> /usr/local/etc/php/conf.d/xdebug.ini \
+	&& echo "xdebug.idekey=\"netbeans-xdebug\"" >> /usr/local/etc/php/conf.d/xdebug.ini
+	
 
 # Set timezone
 RUN echo 'date.timezone=UTC' > /usr/local/etc/php/conf.d/date.ini

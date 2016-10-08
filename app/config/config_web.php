@@ -1,5 +1,8 @@
 <?php
 
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+
 // User config
 $user = null;
 if (isset($_SESSION['user'])) {
@@ -19,11 +22,20 @@ if (isset($_SESSION['user'])) {
 $shared = [];
 $shared['user'] = $user;
 
+$shared ['site'] = [
+	'name' => getenv('APP_NAME') ?: 'Skeleton app',
+	'url' => getenv('APP_URL') ?: 'http://test.app',
+	'sender' => getenv('APP_SENDER') ?: 'skeleton@example.app',
+	'replyto' => getenv('APP_REPLYTO') ?: 'skeleton@example.app',
+	'debug' => getenv('DEBUG') === 'true',
+	'env' => getenv('APPLICATION_ENV'),
+	'logFolder' => __DIR__ . '/../../../logs',
+	'viewsFolders' => [__DIR__ . '/../../../src/Standard/Views']
+];
+
 // Return the global config array
 return [
-	'site-config' => [
-	// Global site config goes here
-	],
+	'site-config' => $shared['site'],
 	// Prepare twig for DI
 	Twig_Environment::class => function () use ($shared) {
 		$loader = new Twig_Loader_Filesystem(realpath('../templates'));
@@ -33,6 +45,10 @@ return [
 			$twigEnvironment->addGlobal('alias', $shared['user']->getAlias());
 		}
 		return $twigEnvironment;
+	},
+	ClientInterface::class => function () {
+		$client = new Client();
+		return $client;
 	},
 	'User' => function () use ($shared) {
 		return $shared['user'];

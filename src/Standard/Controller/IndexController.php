@@ -25,7 +25,7 @@ class IndexController extends Controller {
 	 */
 	public function __invoke() {
 		$message = 'Hello from Home, invoked';
-		echo $this->twig->render('index.twig', [
+		echo $this->twig->render('lobby.twig', [
 			'message' => $message,
 		]);
 	}
