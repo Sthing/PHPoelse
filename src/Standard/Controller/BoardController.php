@@ -85,14 +85,12 @@ class BoardController extends Controller {
 			$msg = $e->getMessage();
 		}
 		if ($stmt->rowCount() == 1) {
+			$pusher = $this->getPusher();
+			$pusher->trigger('board', 'tileRemoved', ['tileId' => $tileId, 'toX' => $toX, 'toY' => $toY]);
 			echo json_encode(['result' => 1]);
 		} else {
 			echo json_encode(['result' => 0, 'msg' => $msg]);
 		}
-		
-		// @todo Handle if move failed!
-		$pusher = $this->getPusher();
-		$pusher->trigger('board', 'tileRemoved', ['tileId' => $tileId, 'toX' => $toX, 'toY' => $toY]);
 	}
 
 	public function removeAction() {
