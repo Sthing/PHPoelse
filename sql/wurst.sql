@@ -1,0 +1,184 @@
+-- MySQL dump 10.13  Distrib 5.5.46, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: wurst
+-- ------------------------------------------------------
+-- Server version	5.5.46-0ubuntu0.12.04.2
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `game`
+--
+
+DROP TABLE IF EXISTS `game`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `level_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `level_idx` (`level_id`),
+  CONSTRAINT `level2` FOREIGN KEY (`level_id`) REFERENCES `level` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `game`
+--
+
+LOCK TABLES `game` WRITE;
+/*!40000 ALTER TABLE `game` DISABLE KEYS */;
+/*!40000 ALTER TABLE `game` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `game_2_player`
+--
+
+DROP TABLE IF EXISTS `game_2_player`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_2_player` (
+  `game_id` int(10) unsigned NOT NULL,
+  `player_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`game_id`,`player_id`),
+  KEY `player_idx` (`player_id`),
+  CONSTRAINT `game` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `player` FOREIGN KEY (`player_id`) REFERENCES `player` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `game_2_player`
+--
+
+LOCK TABLES `game_2_player` WRITE;
+/*!40000 ALTER TABLE `game_2_player` DISABLE KEYS */;
+/*!40000 ALTER TABLE `game_2_player` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `game_2_tile`
+--
+
+DROP TABLE IF EXISTS `game_2_tile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `game_2_tile` (
+  `game_id` int(10) unsigned NOT NULL,
+  `player_id` int(10) unsigned NOT NULL,
+  `tile_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `x` int(10) unsigned DEFAULT NULL,
+  `y` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`game_id`,`player_id`,`tile_id`),
+  UNIQUE KEY `location_idx` (`game_id`,`x`,`y`),
+  KEY `player2_idx` (`player_id`),
+  KEY `tile_idx` (`tile_id`),
+  CONSTRAINT `game2` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `player2` FOREIGN KEY (`player_id`) REFERENCES `player` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `tile` FOREIGN KEY (`tile_id`) REFERENCES `tile` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `game_2_tile`
+--
+
+LOCK TABLES `game_2_tile` WRITE;
+/*!40000 ALTER TABLE `game_2_tile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `game_2_tile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `level`
+--
+
+DROP TABLE IF EXISTS `level`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `level` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `level`
+--
+
+LOCK TABLES `level` WRITE;
+/*!40000 ALTER TABLE `level` DISABLE KEYS */;
+/*!40000 ALTER TABLE `level` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `player`
+--
+
+DROP TABLE IF EXISTS `player`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `player` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `alias` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `player`
+--
+
+LOCK TABLES `player` WRITE;
+/*!40000 ALTER TABLE `player` DISABLE KEYS */;
+/*!40000 ALTER TABLE `player` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tile`
+--
+
+DROP TABLE IF EXISTS `tile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tile` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `level_id` int(10) unsigned NOT NULL,
+  `type` enum('west_east','north_south','north_east','east_south','south_west','west_north') COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `level_idx` (`level_id`),
+  CONSTRAINT `level` FOREIGN KEY (`level_id`) REFERENCES `level` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tile`
+--
+
+LOCK TABLES `tile` WRITE;
+/*!40000 ALTER TABLE `tile` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tile` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-10-08 13:01:21
