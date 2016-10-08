@@ -33,11 +33,14 @@
 					<tr>
 						<td>#{{ game.id }}</td>
 						<td>{{ game.playerCount }} players</td>
-						<td><a href="/join-game/{{ game.id }}" class="btn btn-default">Join</a></td>
+						<td><a href="/game/join/{{ game.id }}" class="btn btn-default">Join</a></td>
 					</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+		<div class="panel-footer">
+			<a href="/game/create" class="btn btn-success">Create</a>
+		</div>
 	</div>
 
 	<div class="panel panel-default">

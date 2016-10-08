@@ -48,6 +48,60 @@ class BoardController extends Controller {
 	}
 
 	/**
+	 * The default action
+	 */
+	public function __invoke() {
+		$gameId = 1; // @todo Get from session
+		$stmt = $this->dbh->prepare("
+				SELECT	game_2_tile.tile_id,
+						game_2_tile.player_id,
+						tile.type
+				FROM	game_2_tile
+				JOIN	tile ON (
+						tile.id = game_2_tile.tile_id
+					AND	tile.x IS NOT NULL
+					AND	tile.y IS NOT NULL
+				)
+				WHERE	game_2_tile.game_id = ?
+			");
+		$stmt->bindParam('gameId', $gameId);
+		$stmt->execute();
+		$stmt->setFetchMode(PDO::FETCH_CLASS, 'stdClass');
+		$tiles = [];
+		while ($tile = $stmt->fetch()) {
+			$tiles[$tile->x][$tile->y] = $tile;
+		}
+		
+		$stmtPlayerTiles = $this->dbh->prepare("
+				SELECT	game_2_tile.tile_id,
+						game_2_tile.player_id,
+						tile.type
+				FROM	game_2_tile
+				JOIN	tile ON (
+						tile.id = game_2_tile.tile_id
+					AND	tile.x IS NULL
+					AND	tile.y IS NULL
+				)
+				WHERE	game_2_tile.game_id = :gameId:
+					AND	game_2_tile.player_id = :playerId:
+			");
+		$stmtPlayerTiles->bindParam('gameId', $gameId);
+		$stmtPlayerTiles->bindParam('playerId', $this->user->getId());
+		$stmtPlayerTiles->execute();
+		$stmtPlayerTiles->setFetchMode(PDO::FETCH_CLASS, 'stdClass');
+		$playerTiles = [];
+		while ($playerTile = $stmt->fetch()) {
+			$playerTiles[] = $playerTile;
+		}
+		
+		echo $this->twig->render('board.twig', [
+			'gameId' => $gameId,
+			'tiles' => $tiles,
+			'playerTiles' => $playerTiles,
+		]);
+	}
+
+	/**
 	 * 
 	 */
 	public function createGameSessionAction() {

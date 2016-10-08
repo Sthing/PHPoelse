@@ -139,7 +139,6 @@ class GameValidator {
 					default:
 						throw new Exception("Unknown direction '$direction'");
 				}
-				//echo "$direction ($x,$y)\n";
 			}
 			return true;
 		}

@@ -4,18 +4,24 @@
 
 {% block content %}
 	<div class="page-header">
-		<h1>PHPølse - Game #{{ game.id }}</h1>
+		<h1>PHPølse - Game #{{ gameId }}</h1>
 	</div>
 
 	<div id="board" class="board">
-		{% for tile in tiles %}
-			{% if tile.type == 'elephant' or tile.type == 'wurst' or tile.type == 'fellow' or tile.type == 'block' %}
-				<div class="board-cell" data-x="{{ tile.x }}" data-y="{{ tile.y }}">
-					<div class="tile tile-{{ tile.type }}">
-				</div>
-			{% else %}
-				<div class="board-cell droppable" data-x="{{ tile.x }}" data-y="{{ tile.y }}"></div>
-			{% endif %}
+		{% for x in 0..7 %}
+			{% for y in 0..7 %}
+				{% if tiles[x][y] is defined %}
+					{% if tile.type == 'elephant' or tile.type == 'wurst' or tile.type == 'fellow' or tile.type == 'block' %}
+						<div class="board-cell" data-x="{{ tile.x }}" data-y="{{ tile.y }}">
+							<div class="tile tile-{{ tile.type }}">
+						</div>
+					{% else %}
+						<div class="board-cell droppable" data-x="{{ tile.x }}" data-y="{{ tile.y }}"></div>
+					{% endif %}
+				{% else %}
+					<div class="board-cell droppable" data-x="{{ tile.x }}" data-y="{{ tile.y }}"></div>
+				{% endif %}
+			{% endfor %}
 		{% endfor %}
 	</div>
 
