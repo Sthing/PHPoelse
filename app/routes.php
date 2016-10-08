@@ -11,4 +11,5 @@ return [
 		[['GET', 'POST'], '/player/create', ['Standard\Controller\IndexController', 'createPlayerAction']],
 		[['GET', 'POST'], '/move', ['Standard\Controller\BoardController', 'moveAction']],
 		[['GET', 'POST'], '/remove', ['Standard\Controller\BoardController', 'removeAction']],
+		[['GET'], '/board', ['Standard\Controller\BoardController', 'indexAction']],
 ];

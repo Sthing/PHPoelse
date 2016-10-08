@@ -54,7 +54,7 @@ class IndexController extends Controller {
 		
 		$user = new User($this->dbh->lastInsertId(), $alias);
 		$_SESSION['userData'] = ['id' => $user->getId(), 'alias' => $user->getAlias()];
-		echo json_encode(['id' => $user->getId()]);
+		$this->redirect('/board');
 	}
 
 }

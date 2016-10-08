@@ -50,23 +50,25 @@ class BoardController extends Controller {
 	/**
 	 * The default action
 	 */
-	public function __invoke() {
+	public function indexAction() {
 		$gameId = 1; // @todo Get from session
 		$stmt = $this->dbh->prepare("
 				SELECT	game_2_tile.tile_id,
 						game_2_tile.player_id,
-						tile.type
+						tile.type,
+						tile.x,
+						tile.y
 				FROM	game_2_tile
 				JOIN	tile ON (
 						tile.id = game_2_tile.tile_id
 					AND	tile.x IS NOT NULL
 					AND	tile.y IS NOT NULL
 				)
-				WHERE	game_2_tile.game_id = ?
+				WHERE	game_2_tile.game_id = :gameId
 			");
 		$stmt->bindParam('gameId', $gameId);
 		$stmt->execute();
-		$stmt->setFetchMode(PDO::FETCH_CLASS, 'stdClass');
+		$stmt->setFetchMode(\PDO::FETCH_CLASS, 'stdClass');
 		$tiles = [];
 		while ($tile = $stmt->fetch()) {
 			$tiles[$tile->x][$tile->y] = $tile;
@@ -75,18 +77,21 @@ class BoardController extends Controller {
 		$stmtPlayerTiles = $this->dbh->prepare("
 				SELECT	game_2_tile.tile_id,
 						game_2_tile.player_id,
-						tile.type
+						tile.type,
+						tile.x,
+						tile.y
 				FROM	game_2_tile
 				JOIN	tile ON (
 						tile.id = game_2_tile.tile_id
 					AND	tile.x IS NULL
 					AND	tile.y IS NULL
 				)
-				WHERE	game_2_tile.game_id = :gameId:
-					AND	game_2_tile.player_id = :playerId:
+				WHERE	game_2_tile.game_id = :gameId
+					AND	game_2_tile.player_id = :playerId
 			");
+		$playerId = $this->user->getId();
 		$stmtPlayerTiles->bindParam('gameId', $gameId);
-		$stmtPlayerTiles->bindParam('playerId', $this->user->getId());
+		$stmtPlayerTiles->bindParam('playerId', $playerId);
 		$stmtPlayerTiles->execute();
 		$stmtPlayerTiles->setFetchMode(PDO::FETCH_CLASS, 'stdClass');
 		$playerTiles = [];
@@ -100,6 +105,7 @@ class BoardController extends Controller {
 			'playerTiles' => $playerTiles,
 		]);
 	}
+
 
 	/**
 	 * 
