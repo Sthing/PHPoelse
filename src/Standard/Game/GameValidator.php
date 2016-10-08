@@ -8,6 +8,9 @@
 
 namespace Standard\Game;
 
+use Exception;
+use PDO;
+
 /**
  * Description of GameValidator
  *
@@ -23,6 +26,10 @@ class GameValidator {
 	public function __construct(PDO $dbh) {
 		$this->dbh = $dbh;
 	}
+	
+	public function __invoke($gameId) {
+		return $this->isDone($gameId);
+	}
 
 	/**
 	 * Checks whether the tiles placed for game $gameID forms a valid route from the elephant to the wurst.
@@ -34,12 +41,6 @@ class GameValidator {
 	public function isDone(int $gameId): bool {
 		$maxX = $maxY = 7;
 
-		class tileLocation {
-			public $x;
-			public $y;
-			public $type;
-		}
-
 		try {
 			$tileLocations = [];
 			$x = $y = null;
@@ -48,10 +49,14 @@ class GameValidator {
 								tile.`type`
 					FROM		game_2_tile
 					JOIN		tile ON tile.id = game_2_tile.tile_id
-					WHERE		game_2_tile.game_id = :gameId";
-			$stmt = $dbh->prepare($sql);
-			$stmt->bindParam(':gameId', $gameId);
-			foreach ($dbh->query($sql, PDO::FETCH_CLASS, 'tileLocation') AS $tileLocation) {
+					WHERE		game_2_tile.game_id = :gameId
+					  AND		tile.`x` is not null
+					  AND		tile.`y` is not null";
+			$stmt = $this->dbh->prepare($sql);
+			$stmt->bindParam('gameId', $gameId);
+			$stmt->execute();
+			$stmt->setFetchMode(PDO::FETCH_CLASS, 'Standard\Game\Tilelocation');
+			while ($tileLocation = $stmt->fetch()) {
 				$tileLocations[$tileLocation->x][$tileLocation->y] = $tileLocation->type;
 				if ($tileLocation->type == 'elephant') {
 					$x = $tileLocation->x;

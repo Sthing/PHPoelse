@@ -2,9 +2,11 @@
 
 namespace Standard\Controller;
 
+use DI\Container;
 use Exception;
 use PDO;
 use Standard\Abstracts\Controller;
+use Standard\Game\GameValidator;
 use Standard\User\User;
 use Twig_Environment;
 use function GuzzleHttp\json_encode;
@@ -28,14 +30,21 @@ class BoardController extends Controller {
 	 * @Inject("User")
 	 */
 	private $user;
+	
+	/**
+	 *
+	 * @var Container 
+	 */
+	private $container;
 
 	/**
 	 * 
 	 * @param \Standard\Controller\Twig_Environment $twig
 	 */
-	public function __construct(Twig_Environment $twig, PDO $dbh) {
+	public function __construct(Twig_Environment $twig, PDO $dbh, Container $container) {
 		$this->twig = $twig;
 		$this->dbh = $dbh;
+		$this->container = $container;
 	}
 
 	/**
@@ -83,8 +92,14 @@ class BoardController extends Controller {
 		} catch (Exception $e) {
 			$msg = $e->getMessage();
 		}
+		
+		$this->container->call(GameValidator::class, [$gameId]);
 		if ($stmt->rowCount() == 1) {
-			echo json_encode(['result' => 1]);
+			$result = ['result' => 1];
+			
+			// Check done
+			
+			
 		} else {
 			echo json_encode(['result' => 0, 'msg' => $msg]);
 		}
