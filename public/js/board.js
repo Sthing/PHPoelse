@@ -60,21 +60,45 @@ var board = {
 	/**
 	 * Try to move a tile to a new cell.
 	 *
-	 * @param {String} tile
+	 * @param {String} tileId
 	 * @param {Number} toX
 	 * @param {Number} toY
 	 */
-	movePlayerTile: function(tile, toX, toY) {
-		// @todo Make server request!
+	movePlayerTile: function(tileId, toX, toY) {
+		$.ajax({
+			url: '/move',
+			data: {
+				tileId: tileId,
+				toX: toX,
+				toY: toY
+			},
+			async: true,
+			type: 'POST',
+			success: function(response) {
+				if ( ! response.success) {
+					// @todo Move the tile back!
+				}
+			}
+		});
 	},
 
 	/**
 	 * Remove a player tile from the board (back to the players tiles)
 	 *
-	 * @param {String} tile
+	 * @param {String} tileId
 	 */
-	removePlayerTile: function(tile) {
-		
+	removePlayerTile: function(tileId) {
+		$.ajax({
+			url: '/remove',
+			data: {
+				tileId: tileId
+			},
+			async: true,
+			type: 'POST',
+			success: function() {
+				
+			}
+		});
 	},
 
 	/**
