@@ -23,13 +23,20 @@ abstract class Controller {
 		header('Location: ' . $url);
 		die();
 	}
-	
+
 	/**
 	 * Gets a post parameter
 	 * @param string $param
 	 * @param mixed $default Default value
 	 */
-	protected function post($param, $default = null) {
-		return (isset($_POST[$param]) ? $_POST[$param] : $default);
+	protected function get($param, $default = null) {
+		if (isset($_POST[$param])) {
+			return $_POST[$param];
+		} elseif (isset($_GET[$param])) {
+			return $_GET[$param];
+		} else {
+			return $default;
+		}
 	}
+
 }

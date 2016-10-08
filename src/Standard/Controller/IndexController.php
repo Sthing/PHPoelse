@@ -44,7 +44,7 @@ class IndexController extends Controller {
 	 * 
 	 */
 	public function createPlayerAction() {
-		$alias = $this->post('alias');
+		$alias = $this->get('alias');
 		if (empty($alias)) {
 			throw new Exception("Alias is required");
 		}
@@ -53,7 +53,7 @@ class IndexController extends Controller {
 		$stmt->execute();
 		
 		$user = new User($this->dbh->lastInsertId(), $alias);
-		$_SESSION['user'] = $user;
+		$_SESSION['userData'] = ['id' => $user->getId(), 'alias' => $user->getAlias()];
 		echo json_encode(['id' => $user->getId()]);
 	}
 

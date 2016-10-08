@@ -2,9 +2,12 @@
 
 namespace Standard\Controller;
 
+use Exception;
 use PDO;
 use Standard\Abstracts\Controller;
+use Standard\User\User;
 use Twig_Environment;
+use function GuzzleHttp\json_encode;
 
 class BoardController extends Controller {
 
@@ -18,10 +21,10 @@ class BoardController extends Controller {
 	 * @var PDO
 	 */
 	private $dbh;
-	
+
 	/**
 	 *
-	 * @var \Standard\User\User
+	 * @var User
 	 * @Inject("User")
 	 */
 	private $user;
@@ -34,7 +37,7 @@ class BoardController extends Controller {
 		$this->twig = $twig;
 		$this->dbh = $dbh;
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -48,25 +51,43 @@ class BoardController extends Controller {
 	 */
 	public function moveAction() {
 		// Extract
-		$tileId = $this->post('tileId');
-		$toX = $this->post('toX');
-		$toY = $this->post('toY');
-		$playerId = $this->post('playerId');
-		$gameId = $this->post('gameId');
-		
+		$tileId = $this->get('tileId');
+		$toX = $this->get('toX');
+		$toY = $this->get('toY');
+		$playerId = $this->get('playerId');
+		$gameId = $this->get('gameId');
+
 		// @todo Pre-validation
 		if ($playerId != $this->user->getId()) {
 			throw new Exception("That's not your tile!");
 		}
-		
+
 		// Prepare, bind and execute
-		$stmt = $this->dbh->prepare("insert into game_2_tile (game_id, player_id, tile_id, x, y) values (:gameId, :playerId, :tileId, :x, :y)");
+		$stmt = $this->dbh->prepare("
+			update game_2_tile
+				set x = :x,
+					y = :y
+			where
+				game_id = :gameId and
+				player_id = :playerId and
+				tile_id = :tileId");
 		$stmt->bindParam('tileId', $tileId);
 		$stmt->bindParam('gameId', $gameId);
 		$stmt->bindParam('playerId', $playerId);
 		$stmt->bindParam('x', $toX);
 		$stmt->bindParam('y', $toY);
-		$stmt->execute();
+		$msg = null;
+		try {
+			$res = $stmt->execute();
+			$msg = 'Not your tile';
+		} catch (Exception $e) {
+			$msg = $e->getMessage();
+		}
+		if ($stmt->rowCount() == 1) {
+			echo json_encode(['result' => 1]);
+		} else {
+			echo json_encode(['result' => 0, 'msg' => $msg]);
+		}
 	}
 
 }

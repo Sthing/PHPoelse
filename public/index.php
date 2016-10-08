@@ -4,6 +4,8 @@ use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 
+session_start();
+
 // We want everything to be relative to index.php
 chdir(__DIR__);
 
@@ -43,7 +45,7 @@ switch ($routeInfo[0]) {
 		break;
 	case Dispatcher::METHOD_NOT_ALLOWED:
 		$allowedMethods = $routeInfo[1];
-		echo $twig->render('405.html');
+		echo $container->get(Twig_Environment::class)->render('404.twig');
 		break;
 	case Dispatcher::FOUND:
 		$controller = $routeInfo[1];

@@ -5,17 +5,19 @@ use GuzzleHttp\ClientInterface;
 
 // User config
 $user = null;
-if (isset($_SESSION['user'])) {
-	$user = $_SESSION['user']; /* @var $user Standard\User */
+if (isset($_SESSION['userData'])) {
+	$userData = $_SESSION['userData']; /* @var $user Standard\User */
 
 	// Do we have a valid user?
-	if (!($user instanceof Standard\User\User)) {
+	if (!isset($userData['id'])) {
 		session_destroy();
-		unset($_SESSION['user']);
+		unset($_SESSION['userData']);
 
 		// Redirect to the main page
 		header('Location: /');
 		die();
+	} else {
+		$user = new Standard\User\User($userData['id'], $userData['alias']);
 	}
 }
 // Shared config (may be moved into a separate file)
