@@ -111,7 +111,7 @@ CREATE TABLE `level` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,6 +120,7 @@ CREATE TABLE `level` (
 
 LOCK TABLES `level` WRITE;
 /*!40000 ALTER TABLE `level` DISABLE KEYS */;
+INSERT INTO `level` VALUES (1,'A gentle start'),(2,'Turn baby, turn!');
 /*!40000 ALTER TABLE `level` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,11 +157,13 @@ DROP TABLE IF EXISTS `tile`;
 CREATE TABLE `tile` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `level_id` int(10) unsigned NOT NULL,
-  `type` enum('west_east','north_south','north_east','east_south','south_west','west_north') COLLATE utf8_unicode_ci NOT NULL,
+  `type` enum('WE','NS','NE','ES','SW','WN','elephant','wurst') COLLATE utf8_unicode_ci NOT NULL,
+  `x` int(10) unsigned NOT NULL,
+  `y` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `level_idx` (`level_id`),
   CONSTRAINT `level` FOREIGN KEY (`level_id`) REFERENCES `level` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,6 +172,7 @@ CREATE TABLE `tile` (
 
 LOCK TABLES `tile` WRITE;
 /*!40000 ALTER TABLE `tile` DISABLE KEYS */;
+INSERT INTO `tile` VALUES (9,1,'elephant',0,4),(10,1,'WE',1,4),(11,1,'WE',2,4),(12,1,'WE',3,4),(13,1,'WE',4,4),(14,1,'WE',5,4),(15,1,'WE',6,4),(16,1,'wurst',7,4),(17,2,'elephant',0,7),(18,2,'WE',1,7),(19,2,'WE',2,7),(20,2,'WE',3,7),(21,2,'SW',4,7),(22,2,'NS',4,6),(23,2,'NS',4,5),(24,2,'NS',4,4),(25,2,'NS',4,3),(26,2,'NS',4,2),(27,2,'NS',4,1),(28,2,'NE',4,0),(29,2,'WE',5,0),(30,2,'WE',6,0),(31,2,'wurst',7,0);
 /*!40000 ALTER TABLE `tile` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -181,4 +185,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-08 13:01:21
+-- Dump completed on 2016-10-08 13:22:42
