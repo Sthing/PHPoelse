@@ -9,13 +9,19 @@
 
 	<div id="board" class="board">
 		{% for tile in tiles %}
-			<div class="board-cell dropable"></div>
+			{% if tile.type = 'elephant' or tile.type = 'wurst' or tile.type = 'fellow' or tile.type = 'block' %}
+				<div class="board-cell" data-x="{{ tile.x }}" data-y="{{ tile.y }}">
+					<div class="tile tile-{{ tile.type }}">
+				</div>
+			{% else %}
+				<div class="board-cell droppable" data-x="{{ tile.x }}" data-y="{{ tile.y }}"></div>
+			{% endif %}
 		{% endfor %}
 	</div>
 
-	<div>
+	<div id="player-tiles">
 		{% for playerTile in playerTiles %}
-			<div class="tile tile-{{ playerTile.type }}"></div>
+			<div class="tile tile-{{ playerTile.type }} draggable" data-id="{{ playerTile.id }}"></div>
 		{% endfor %}
 	</div>
 {% endblock %}
