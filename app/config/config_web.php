@@ -46,6 +46,11 @@ return [
 		}
 		return $twigEnvironment;
 	},
+	PDO::class => function () {
+		$dbh = new PDO('mysql:host=localhost;dbname=wurst', 'wurstUser', 'wurstPassword');
+		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		return $dbh;
+	},
 	ClientInterface::class => function () {
 		$client = new Client();
 		return $client;
