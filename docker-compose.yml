@@ -1,0 +1,45 @@
+version: '2'
+services:
+    poelse:
+        # PHP apache
+        build:
+            context: .
+        volumes:
+          # Mount the local drupal directory in the container
+          # - ./frontend/docs:/var/www/html
+          # - ./frontend/nbproject:/app/frontend
+          - ./:/app
+        env_file:
+            - ./developer.env
+        ports:
+          # Expose the web port
+          - 80:80
+        depends_on:
+          # Link the DB container:
+          - db
+        networks:
+          internal:
+              
+    db:
+        # A docker official base image for MySQL
+        image: mysql:5.6
+        # Default environment variables used to set up the container on the first run:
+        environment:
+          MYSQL_ROOT_PASSWORD: dontCarejustForDevelopmentbutLonger
+          MYSQL_DATABASE: poelse
+          MYSQL_USER: shop
+          MYSQL_PASSWORD: dontCarejustForDevelopment
+        ports:
+            # Expose the internal 3306 to 3307
+            - 3307:3306
+        volumes:
+          # Use a "volume" to prevent data from disappearing when the container is
+          # restarted.
+          # - ./../../../data:/var/lib/mysql
+          # In a production setting, you'd use a locally mounted volume for extra
+          # persistence.  This would mount ./data to /var/lib/mysql inside the container:
+           - ./data:/var/lib/mysql
+        networks:
+            internal:
+networks:
+  internal:

@@ -10,13 +10,22 @@
 			"name": "Søren Thing Andersen",
 			"email": "sta@combine.dk",
 			"role": "Developer"
-		}, {
+		},
+		{
 			"name": "Jonas Grann",
 			"email": "jdg@combine.dk",
 			"role": "Developer"
 		}
 	],
+	"autoload": {
+		"psr-4": {
+			"Standard\\": "src/Standard"
+		}
+	},
 	"require": {
-		"php": "^7.0"
+		"php": "^7.0",
+		"php-di/php-di": "^5.2",
+		"nikic/fast-route": "1.0.*",
+		"twig/twig": "~1.0"
 	}
 }
