@@ -1,0 +1,13 @@
+
+/* Board */
+.board {
+	width: 512px;
+}
+.board-cell {
+	float: left;
+	width: 64px;
+	height: 64px;
+
+	border: 1px solid #000000;
+	background-color: #5f5f5f;
+}

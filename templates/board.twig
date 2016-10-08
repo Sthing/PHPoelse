@@ -1,0 +1,27 @@
+{% extends "layout.twig" %}
+
+{% block title %}Lobby{% endblock %}
+
+{% block content %}
+	<div class="page-header">
+		<h1>PHPølse - Game #{{ game.id }}</h1>
+	</div>
+
+	<div id="board" class="board">
+		{% for tile in tiles %}
+			<div class="board-cell dropable"></div>
+		{% endfor %}
+	</div>
+
+	<div>
+		{% for playerTile in playerTiles %}
+			<div class="tile tile-{{ playerTile.type }}"></div>
+		{% endfor %}
+	</div>
+{% endblock %}
+
+<script type="text/javascript">
+	$(function() {
+		board.init();
+	});
+</script>
