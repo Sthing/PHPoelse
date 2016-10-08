@@ -22,6 +22,9 @@ if (isset($_SESSION['user'])) {
 $shared = [];
 $shared['user'] = $user;
 
+$dbh = new PDO('mysql:host=localhost;dbname=wurst', 'wurstUser', 'wurstPassword');
+$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 $shared ['site'] = [
 	'name' => getenv('APP_NAME') ?: 'Skeleton app',
 	'url' => getenv('APP_URL') ?: 'http://test.app',
