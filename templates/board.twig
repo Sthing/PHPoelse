@@ -25,19 +25,26 @@
 		{% endfor %}
 	</div>
 
+	<br />
+	
 	<div id="player-tiles">
 		{% for playerTile in playerTiles %}
 			<div class="tile tile-{{ playerTile.type }} draggable" data-id="{{ playerTile.id }}"></div>
 		{% endfor %}
 	</div>
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
-<script type="text/javascript">
-	$(function () {
-		board.init();
-	});
-</script>
+	<br />
+	<script type="text/javascript">
+		$(function () {
+			board.init();
+		});
+	</script>
 
+<<<<<<< Updated upstream
 <div id="gameover_success_modal" class="modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -55,3 +62,21 @@
 </div><!-- /.modal -->
 
 {% endblock %}
+=======
+	<div id="gameover_success_modal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Success!</h4>
+				</div>
+				<div class="modal-body">
+					<p>You did well</p>
+				</div>
+				<div class="modal-footer">
+					<a href="/next-level" class="btn btn-primary">Next level</a>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+{% endblock %}
+>>>>>>> Stashed changes
