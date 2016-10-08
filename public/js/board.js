@@ -74,7 +74,7 @@ var board = {
 	 */
 	movePlayerTile: function(tileId, toX, toY) {
 		$.ajax({
-			url: '/tile/move',
+			url: '/move',
 			data: {
 				tileId: tileId,
 				toX: toX,
@@ -97,7 +97,7 @@ var board = {
 	 */
 	removePlayerTile: function(tileId) {
 		$.ajax({
-			url: '/tile/remove',
+			url: '/remove',
 			data: {
 				tileId: tileId
 			},

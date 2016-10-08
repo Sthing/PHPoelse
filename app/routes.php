@@ -9,5 +9,6 @@ return [
 	// it needs to have a magic __invoke method defined
 		['GET', '/', 'Standard\Controller\IndexController'],
 		[['GET', 'POST'], '/player/create', ['Standard\Controller\IndexController', 'createPlayerAction']],
-		[['GET', 'POST'], '/move', ['Standard\Controller\BoardController', 'moveAction']]
+		[['GET', 'POST'], '/move', ['Standard\Controller\BoardController', 'moveAction']],
+		[['GET', 'POST'], '/remove', ['Standard\Controller\BoardController', 'removeAction']],
 ];

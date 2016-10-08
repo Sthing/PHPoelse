@@ -28,6 +28,7 @@
 		"doctrine/annotations": "^1.2",
 		"php-di/php-di": "^5.2",
 		"nikic/fast-route": "1.0.*",
-		"twig/twig": "~1.0"
+		"twig/twig": "~1.0",
+		"pusher/pusher-php-server": "^2.2"
 	}
 }
