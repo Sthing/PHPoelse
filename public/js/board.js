@@ -2,8 +2,16 @@
 /* exported board */
 
 var board = {
-	pusherChannelTest: null,
+	/**
+	 * The Pusher channel the board is using.
+	 *
+	 * @type PusherChannel
+	 */
+	pusherChannel: null,
 
+	/**
+	 * Initialize the board!
+	 */
 	init: function() {
 		this.initBoardCells();
 		this.initPlayerTiles();
