@@ -9,7 +9,7 @@
 
 	<div id="board" class="board">
 		{% for tile in tiles %}
-			{% if tile.type = 'elephant' or tile.type = 'wurst' or tile.type = 'fellow' or tile.type = 'block' %}
+			{% if tile.type == 'elephant' or tile.type == 'wurst' or tile.type == 'fellow' or tile.type == 'block' %}
 				<div class="board-cell" data-x="{{ tile.x }}" data-y="{{ tile.y }}">
 					<div class="tile tile-{{ tile.type }}">
 				</div>
@@ -27,7 +27,23 @@
 {% endblock %}
 
 <script type="text/javascript">
-	$(function() {
+	$(function () {
 		board.init();
 	});
 </script>
+
+<div id="gameover_success_modal" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Success!</h4>
+			</div>
+			<div class="modal-body">
+				<p>You did well</p>
+			</div>
+			<div class="modal-footer">
+				<a href="/next-level" class="btn btn-primary">Next level</a>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
