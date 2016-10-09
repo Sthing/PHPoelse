@@ -20,6 +20,13 @@ class IndexController extends Controller {
 	 * @var PDO
 	 */
 	private $dbh;
+	
+	/**
+	 *
+	 * @var User
+	 * @Inject("User")
+	 */
+	private $user;
 
 	/**
 	 * 
@@ -34,8 +41,11 @@ class IndexController extends Controller {
 	 * The default action
 	 */
 	public function __invoke() {
+		if ($this->user) {
+			$this->redirect('/lobby');
+		}
 		$message = 'Hello from Home, invoked';
-		echo $this->twig->render('lobby.twig', [
+		echo $this->twig->render('index.twig', [
 			'message' => $message,
 		]);
 	}
@@ -54,7 +64,7 @@ class IndexController extends Controller {
 		
 		$user = new User($this->dbh->lastInsertId(), $alias);
 		$_SESSION['userData'] = ['id' => $user->getId(), 'alias' => $user->getAlias()];
-		$this->redirect('/board');
+		$this->redirect('/lobby');
 	}
 
 }

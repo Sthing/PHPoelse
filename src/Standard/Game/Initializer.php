@@ -22,7 +22,7 @@ class Initializer {
 	 * @param int $levelId
 	 * @return boolean
 	 */
-	public function invoke(int $gameId, int $levelId) : bool  {
+	public function prepareGame(int $gameId, int $levelId) : bool  {
 		// Find game
 		$sql = "SELECT		*
 				FROM		game

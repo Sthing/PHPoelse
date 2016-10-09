@@ -44,7 +44,8 @@ return [
 	// Prepare twig for DI
 	Twig_Environment::class => function () use ($shared) {
 		$loader = new Twig_Loader_Filesystem(realpath('../templates'));
-		$twigEnvironment = new Twig_Environment($loader, array('cache' => realpath('../cache')));
+		// Cache: array('cache' => realpath('../cache'))
+		$twigEnvironment = new Twig_Environment($loader);
 
 		if ($shared['user']) {
 			$twigEnvironment->addGlobal('alias', $shared['user']->getAlias());

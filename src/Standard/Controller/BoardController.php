@@ -105,6 +105,13 @@ class BoardController extends Controller {
 			'playerTiles' => $playerTiles,
 		]);
 	}
+	
+	/**
+	 * Starts a new game
+	 */
+	public function startGameAction() {
+		
+	}
 
 
 	/**
