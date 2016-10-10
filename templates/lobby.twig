@@ -3,15 +3,15 @@
 {% block title %}Lobby{% endblock %}
 
 {% block content %}
-<div class="container">
+	<div class="container">
 
-	<div class="page-header">
-		<h1>PHPølse - Lobby</h1>
-	</div>
+		<div class="page-header">
+			<h1>PHPølse - Lobby</h1>
+		</div>
 
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Games</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Games</div>
 		</div>
 		<table id="game-list" class="table table-striped">
 			<tbody>
@@ -20,6 +20,9 @@
 						<td>#{{ game.id }}</td>
 						<td>{{ game.playerCount }} players</td>
 						<td><a href="/lobby/join/{{ game.id }}" class="btn btn-default">Join</a></td>
+						{% if playerGames[game.id] is defined %}
+							<td><a href="/lobby/start/{{ game.id }}" class="btn btn-default">Start game</a></td>
+						{% endif %}
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -32,16 +35,16 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Players</div>
-		</div>
-		<table id="player-list" class="table table-striped">
-			<tbody>
-				{% for player in players %}
-					<tr>
-						<td>{{ player.name }}</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
 	</div>
+	<table id="player-list" class="table table-striped">
+		<tbody>
+			{% for player in players %}
+				<tr>
+					<td>{{ player.name }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 </div>
 {% endblock %}

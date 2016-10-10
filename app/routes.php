@@ -10,6 +10,7 @@ return [
 		['GET', '/', 'Standard\Controller\IndexController'],
 		['GET', '/lobby', ['Standard\Controller\LobbyController', 'indexAction']],
 		['GET', '/lobby/join/{gameId:\d+}', ['Standard\Controller\LobbyController', 'joinGameAction']],
+		['GET', '/lobby/start/{gameId:\d+}', ['Standard\Controller\LobbyController', 'startGameAction']],
 		[['GET', 'POST'], '/player/create', ['Standard\Controller\IndexController', 'createPlayerAction']],
 		[['GET', 'POST'], '/move', ['Standard\Controller\BoardController', 'moveAction']],
 		[['GET', 'POST'], '/remove', ['Standard\Controller\BoardController', 'removeAction']],
