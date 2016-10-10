@@ -14,7 +14,7 @@
 				{% if tiles[x][y] is defined %}
 					{% if tile.type == 'elephant' or tile.type == 'wurst' or tile.type == 'fellow' or tile.type == 'block' %}
 						<div class="board-cell" data-x="{{ tile.x }}" data-y="{{ tile.y }}">
-							<div class="tile tile-{{ tile.type }}">
+							<div class="tile tile-{{ tile.type|lower }}"></div>
 						</div>
 					{% else %}
 						<div class="board-cell droppable" data-x="{{ tile.x }}" data-y="{{ tile.y }}"></div>
@@ -30,7 +30,7 @@
 	
 	<div id="player-tiles">
 		{% for playerTile in playerTiles %}
-			<div class="tile tile-{{ playerTile.type }} draggable" data-id="{{ playerTile.id }}"></div>
+			<div class="tile tile-{{ playerTile.type|lower }} draggable" data-id="{{ playerTile.id }}"></div>
 		{% endfor %}
 	</div>
 </div>
