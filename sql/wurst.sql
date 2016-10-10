@@ -26,7 +26,7 @@ CREATE TABLE `game` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `start_time` datetime DEFAULT NULL,
   `end_time` datetime DEFAULT NULL,
-  `level_id` int(10) unsigned NOT NULL,
+  `level_id` int(10) unsigned NULL,
   PRIMARY KEY (`id`),
   KEY `level_idx` (`level_id`),
   CONSTRAINT `level2` FOREIGN KEY (`level_id`) REFERENCES `level` (`id`) ON UPDATE CASCADE
