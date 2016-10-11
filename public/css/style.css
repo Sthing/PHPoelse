@@ -2,6 +2,7 @@
 /* Board */
 .board {
 	width: 512px;
+	clear: both;
 }
 .board-cell {
 	float: left;

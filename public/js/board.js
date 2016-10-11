@@ -13,7 +13,7 @@ var board = {
 	 * Initialize the board!
 	 */
 	init: function() {
-		this.initBoardCells();
+		this.initBoardTiles();
 		this.initPlayerTiles();
 		this.initPusherChannel();
 	},
