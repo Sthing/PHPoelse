@@ -9,6 +9,7 @@ session_start();
 // We want everything to be relative to index.php
 chdir(__DIR__);
 
+// Include autoload
 require '../vendor/autoload.php';
 
 // Build our container
